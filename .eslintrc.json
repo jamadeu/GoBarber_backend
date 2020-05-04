@@ -28,6 +28,7 @@
     "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/camelcase": "off",
     "prettier/prettier": "error",
+    "class-methods-use-this": "off",
     "no-useless-constructor": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
