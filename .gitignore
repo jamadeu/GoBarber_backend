@@ -6,4 +6,5 @@ coverage
 
 tmp/*
 !tmp/.gitkeep
+!tmp/uploads
 yarn-error.log
