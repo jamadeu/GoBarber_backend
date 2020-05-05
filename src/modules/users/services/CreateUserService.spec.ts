@@ -6,9 +6,9 @@ import CreateUserService from './CreateUserService';
 describe('CreateUser', () => {
   it('should be able to create a new user', async () => {
     const fakeUsersRepository = new FakeUserRepository();
-    const createAppointment = new CreateUserService(fakeUsersRepository);
+    const createUser = new CreateUserService(fakeUsersRepository);
 
-    const user = await createAppointment.execute({
+    const user = await createUser.execute({
       name: 'Jhon Doe',
       email: 'jhondoe@gmail.com',
       password: '123123',
@@ -20,16 +20,16 @@ describe('CreateUser', () => {
 
   it('should not be able to create two users with the same email', async () => {
     const fakeUsersRepository = new FakeUserRepository();
-    const createAppointment = new CreateUserService(fakeUsersRepository);
+    const createUser = new CreateUserService(fakeUsersRepository);
 
-    const user = await createAppointment.execute({
+    await createUser.execute({
       name: 'Jhon Doe',
       email: 'jhondoe@gmail.com',
       password: '123123',
     });
 
     expect(
-      createAppointment.execute({
+      createUser.execute({
         name: 'Jhon Doe',
         email: 'jhondoe@gmail.com',
         password: '123123',
