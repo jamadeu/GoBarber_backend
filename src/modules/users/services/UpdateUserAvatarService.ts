@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import uploadConig from '@config/upload';
 import { inject, injectable } from 'tsyringe';
 
@@ -17,6 +18,9 @@ class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
   ) {}
 
   public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
@@ -27,18 +31,12 @@ class UpdateUserAvatarService {
     }
 
     if (user.avatar) {
-      const userAvatarFielPath = path.join(
-        uploadConig.uploadsFolder,
-        user.avatar,
-      );
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFielPath);
-
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFielPath);
-      }
+      await this.storageProvider.deleteFile(user.avatar);
     }
 
-    user.avatar = avatarFilename;
+    const filename = await this.storageProvider.saveFile(avatarFilename);
+
+    user.avatar = filename;
 
     await this.usersRepository.update(user);
 
