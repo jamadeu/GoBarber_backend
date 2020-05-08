@@ -65,7 +65,7 @@ describe('ResetPasswordService', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should be able to reset the password within 2hrs of creating the token', async () => {
+  it('should not be able to reset the password within 2hrs of creating the token', async () => {
     const user = await fakeUsersRepository.create({
       name: 'Jhon Doe',
       email: 'jhondoe@example.com',
@@ -74,7 +74,7 @@ describe('ResetPasswordService', () => {
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
       const customDate = new Date();
-      return customDate.setHours(customDate.getDate() + 3);
+      return customDate.setHours(customDate.getHours() + 3);
     });
 
     const userToken = await fakeUserTokensRepository.generate(user.id);
