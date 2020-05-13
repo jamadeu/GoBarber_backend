@@ -37,8 +37,8 @@ class ResetPasswordService {
       throw new AppError('User not found');
     }
 
-    const tokenCreatedat = userToken.created_at;
-    if (differenceInHours(Date.now(), tokenCreatedat) > 2) {
+    const tokenCreatedAt = userToken.created_at;
+    if (differenceInHours(Date.now(), tokenCreatedAt) > 2) {
       throw new AppError('Token expired');
     }
 
