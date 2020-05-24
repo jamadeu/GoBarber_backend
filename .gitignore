@@ -9,3 +9,4 @@ tmp/*
 !tmp/uploads
 yarn-error.log
 .env
+*.jpg
